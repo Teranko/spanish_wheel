@@ -50,6 +50,7 @@ class WordWheel extends StatefulWidget {
 }
 
 class _WordWheelState extends State<WordWheel> {
+  List<int> wheelState = List.filled(20, 0);
   double plateSize;
   List<List<double>> w100 = [
     [0.5048326333992095, 0.5101130187747035, 0.5364454668972333, 0.6408025568181818],
@@ -131,51 +132,65 @@ class _WordWheelState extends State<WordWheel> {
     [0.355175395256917, 0.487984035326087, 0.49010313735177863, 0.461616847826087],
     [0.026709563364624545, 0.002430598443675904, 0.3344811480978261, 0.3344811480978261]
   ];
+
+  void toggleState(int position){
+    if(wheelState[position-1] > 2){
+      setState(() {
+        wheelState[position-1] = 0;
+      });
+    }else {
+      setState(() {
+        wheelState[position-1]++;
+      });
+      
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    plateSize = MediaQuery.of(context).size.width;
+    plateSize = MediaQuery.of(context).size.width-100;
     return GestureDetector(
       onTapDown: (details) {
         if (locatePoint(details.localPosition.dx, details.localPosition.dy, w100[0], w100[1], plateSize)) {
-          print(1);
+          toggleState(1);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w200[0], w200[1], plateSize)) {
-          print(2);
+          toggleState(2);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w300[0], w300[1], plateSize)) {
-          print(3);
+          toggleState(3);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w400[0], w400[1], plateSize)) {
-          print(4);
+          toggleState(4);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w500[0], w500[1], plateSize)) {
-          print(5);
+          toggleState(5);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w600[0], w600[1], plateSize)) {
-          print(6);
+          toggleState(6);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w700[0], w700[1], plateSize)) {
-          print(7);
+          toggleState(7);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w800[0], w800[1], plateSize)) {
-          print(8);
+          toggleState(8);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w900[0], w900[1], plateSize)) {
-          print(9);
+          toggleState(9);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1000[0], w1000[1], plateSize)) {
-          print(10);
+          toggleState(10);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1100[0], w1100[1], plateSize)) {
-          print(11);
+          toggleState(11);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1200[0], w1200[1], plateSize)) {
-          print(12);
+          toggleState(12);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1300[0], w1300[1], plateSize)) {
-          print(13);
+          toggleState(13);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1400[0], w1400[1], plateSize)) {
-          print(14);
+          toggleState(14);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1500[0], w1500[1], plateSize)) {
-          print(15);
+          toggleState(15);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1600[0], w1600[1], plateSize)) {
-          print(16);
+          toggleState(16);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1700[0], w1700[1], plateSize)) {
-          print(17);
+          toggleState(17);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1800[0], w1800[1], plateSize)) {
-          print(18);
+          toggleState(18);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1900[0], w1900[1], plateSize)) {
-          print(19);
+          toggleState(19);
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w2000[0], w2000[1], plateSize)) {
-          print(20);
+          toggleState(20);
         } else {
           print('no hit');
         }
@@ -191,7 +206,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.5014492753623188,
               child: CustomPaint(
                 size: Size(plateSize * 0.1499130434782609, (plateSize * 0.3569855072463768).toDouble()),
-                painter: Wheel100(),
+                painter: Wheel100(state: wheelState[0]),
               ),
             ),
             Positioned(
@@ -199,7 +214,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.5457101449275362,
               child: CustomPaint(
                 size: Size(plateSize * 0.2451594202898551, (plateSize * 0.3528695652173913).toDouble()),
-                painter: Wheel200(),
+                painter: Wheel200(state: wheelState[1]),
               ),
             ),
             Positioned(
@@ -207,7 +222,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.5870434782608696,
               child: CustomPaint(
                 size: Size(plateSize * 0.3153623188405797, (plateSize * 0.3140289855072464).toDouble()),
-                painter: Wheel300(),
+                painter: Wheel300(state: wheelState[2]),
               ),
             ),
             Positioned(
@@ -215,7 +230,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.6200869565217391,
               child: CustomPaint(
                 size: Size(plateSize * 0.354231884057971, (plateSize * 0.2446666666666667).toDouble()),
-                painter: Wheel400(),
+                painter: Wheel400(state: wheelState[3]),
               ),
             ),
             Positioned(
@@ -223,7 +238,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.6415652173913043,
               child: CustomPaint(
                 size: Size(plateSize * 0.3584057971014493, (plateSize * 0.1515072463768116).toDouble()),
-                painter: Wheel500(),
+                painter: Wheel500(state: wheelState[4]),
               ),
             ),
             Positioned(
@@ -231,7 +246,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.6432753623188406,
               child: CustomPaint(
                 size: Size(plateSize * 0.3567246376811594, (plateSize * 0.1519130434782609).toDouble()),
-                painter: Wheel600(),
+                painter: Wheel600(state: wheelState[5]),
               ),
             ),
             Positioned(
@@ -239,7 +254,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.6231304347826087,
               child: CustomPaint(
                 size: Size(plateSize * 0.3529565217391304, (plateSize * 0.2457971014492754).toDouble()),
-                painter: Wheel700(),
+                painter: Wheel700(state: wheelState[6]),
               ),
             ),
             Positioned(
@@ -247,7 +262,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.5905797101449275,
               child: CustomPaint(
                 size: Size(plateSize * 0.3146376811594203, (plateSize * 0.3156521739130435).toDouble()),
-                painter: Wheel800(),
+                painter: Wheel800(state: wheelState[7]),
               ),
             ),
             Positioned(
@@ -255,7 +270,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.549304347826087,
               child: CustomPaint(
                 size: Size(plateSize * 0.2451304347826087, (plateSize * 0.3542028985507246).toDouble()),
-                painter: Wheel900(),
+                painter: Wheel900(state: wheelState[8]),
               ),
             ),
             Positioned(
@@ -263,7 +278,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.5014492753623188,
               child: CustomPaint(
                 size: Size(plateSize * 0.153536231884058, (plateSize * 0.3581159420289855).toDouble()),
-                painter: Wheel1000(),
+                painter: Wheel1000(state: wheelState[9]),
               ),
             ),
             Positioned(
@@ -271,7 +286,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.3450144927536232,
               child: CustomPaint(
                 size: Size(plateSize * 0.153536231884058, (plateSize * 0.3581159420289855).toDouble()),
-                painter: Wheel1100(),
+                painter: Wheel1100(state: wheelState[10]),
               ),
             ),
             Positioned(
@@ -279,7 +294,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.2053913043478261,
               child: CustomPaint(
                 size: Size(plateSize * 0.245304347826087, (plateSize * 0.3543478260869565).toDouble()),
-                painter: Wheel1200(),
+                painter: Wheel1200(state: wheelState[11]),
               ),
             ),
             Positioned(
@@ -287,7 +302,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.0947826086956522,
               child: CustomPaint(
                 size: Size(plateSize * 0.314463768115942, (plateSize * 0.3154782608695652).toDouble()),
-                painter: Wheel1300(),
+                painter: Wheel1300(state: wheelState[12]),
               ),
             ),
             Positioned(
@@ -295,7 +310,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.0239130434782609,
               child: CustomPaint(
                 size: Size(plateSize * 0.3529565217391304, (plateSize * 0.2457971014492754).toDouble()),
-                painter: Wheel1400(),
+                painter: Wheel1400(state: wheelState[13]),
               ),
             ),
             Positioned(
@@ -303,7 +318,7 @@ class _WordWheelState extends State<WordWheel> {
               left: 0,
               child: CustomPaint(
                 size: Size(plateSize * 0.3567246376811594, (plateSize * 0.1519130434782609).toDouble()),
-                painter: Wheel1500(),
+                painter: Wheel1500(state: wheelState[14]),
               ),
             ),
             Positioned(
@@ -311,7 +326,7 @@ class _WordWheelState extends State<WordWheel> {
               left: 0,
               child: CustomPaint(
                 size: Size(plateSize * 0.3584057971014493, (plateSize * 0.1515072463768116).toDouble()),
-                painter: Wheel1600(),
+                painter: Wheel1600(state: wheelState[15]),
               ),
             ),
             Positioned(
@@ -319,7 +334,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.0256811594202899,
               child: CustomPaint(
                 size: Size(plateSize * 0.354231884057971, (plateSize * 0.2446666666666667).toDouble()),
-                painter: Wheel1700(),
+                painter: Wheel1700(state: wheelState[16]),
               ),
             ),
             Positioned(
@@ -327,7 +342,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.0978840579710145,
               child: CustomPaint(
                 size: Size(plateSize * 0.3148985507246377, (plateSize * 0.3139130434782609).toDouble()),
-                painter: Wheel1800(),
+                painter: Wheel1800(state: wheelState[17]),
               ),
             ),
             Positioned(
@@ -335,7 +350,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.2089565217391304,
               child: CustomPaint(
                 size: Size(plateSize * 0.2453333333333333, (plateSize * 0.3529565217391304).toDouble()),
-                painter: Wheel1900(),
+                painter: Wheel1900(state: wheelState[18]),
               ),
             ),
             Positioned(
@@ -343,7 +358,7 @@ class _WordWheelState extends State<WordWheel> {
               left: plateSize * 0.3486376811594203,
               child: CustomPaint(
                 size: Size(plateSize * 0.1499130434782609, (plateSize * 0.3569855072463768).toDouble()),
-                painter: Wheel2000(),
+                painter: Wheel2000(state: wheelState[19]),
               ),
             ),
           ],
