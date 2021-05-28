@@ -645,11 +645,11 @@ class Wheel1600 extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
-    path_0.moveTo(size.width * 0.06891839, size.height * 0.01372715);
-    path_0.lineTo(size.width * 0.9972258, size.height * 0.7194189);
-    path_0.cubicTo(size.width * 0.9845484, size.height * 0.8079453, size.width * 0.9771774, size.height * 0.9021547, size.width * 0.9759758, size.height * 0.9999887);
-    path_0.lineTo(size.width * 0.00005119081, size.height * 0.9999887);
-    path_0.cubicTo(size.width * 0.001304000, size.height * 0.6558679, size.width * 0.02538290, size.height * 0.3244849, size.width * 0.06891839, size.height * 0.01372715);
+    path_0.moveTo(size.width*0.993 * 0.06891839, size.height * 0.01372715);
+    path_0.lineTo(size.width*0.993 * 0.9972258, size.height * 0.7194189);
+    path_0.cubicTo(size.width*0.993 * 0.9845484, size.height * 0.8079453, size.width*0.993 * 0.9771774, size.height * 0.9021547, size.width*0.993 * 0.9759758, size.height * 0.9999887);
+    path_0.lineTo(size.width*0.993 * 0.00005119081, size.height * 0.9999887);
+    path_0.cubicTo(size.width*0.993 * 0.001304000, size.height * 0.6558679, size.width*0.993 * 0.02538290, size.height * 0.3244849, size.width*0.993 * 0.06891839, size.height * 0.01372715);
     path_0.close();
 
     if (state == 0) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spanish_wheel/paths.dart';
+import 'package:spanish_wheel/text_rotation.dart';
+import 'package:spanish_wheel/wheel_circle_text.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,12 +31,12 @@ class _WheelState extends State<Wheel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green.shade400,
+      backgroundColor: Colors.green.shade800,
       body: SafeArea(
           child: Column(
         children: [
           Expanded(child: SizedBox()),
-          WordWheel(),
+          WordWheel(gotWords: 5),
           Expanded(child: SizedBox()),
         ],
       )),
@@ -43,7 +45,8 @@ class _WheelState extends State<Wheel> {
 }
 
 class WordWheel extends StatefulWidget {
-  WordWheel({Key key}) : super(key: key);
+  WordWheel({Key key, this.gotWords = 1}) : super(key: key);
+  final int gotWords;
 
   @override
   _WordWheelState createState() => _WordWheelState();
@@ -52,6 +55,8 @@ class WordWheel extends StatefulWidget {
 class _WordWheelState extends State<WordWheel> {
   List<int> wheelState = List.filled(20, 0);
   double plateSize;
+  bool middleCircleState = false;
+  String textState = '0';
   List<List<double>> w100 = [
     [0.5048326333992095, 0.5101130187747035, 0.5364454668972333, 0.6408025568181818],
     [0.004572860054347826, 0.33655200098814236, 0.3386942625988143, 0.026709563364624545]
@@ -133,22 +138,88 @@ class _WordWheelState extends State<WordWheel> {
     [0.026709563364624545, 0.002430598443675904, 0.3344811480978261, 0.3344811480978261]
   ];
 
-  void toggleState(int position){
-    if(wheelState[position-1] > 2){
-      setState(() {
-        wheelState[position-1] = 0;
-      });
-    }else {
-      setState(() {
-        wheelState[position-1]++;
-      });
-      
+  @override
+  void initState() {
+    for (int i = 0; i < widget.gotWords; i++) {
+      wheelState[i] = 1;
+    }
+    super.initState();
+  }
+
+  void toggleState(int position) {
+    if (wheelState[position - 1] == 1) {
+      if (wheelState.contains(3)) {
+        for (int i = 0; i < wheelState.length; i++) {
+          if (wheelState[i] == 3) {
+            wheelState[i] = 0;
+          }
+        }
+        wheelState[position - 1] = 2;
+      } else {
+        wheelState[position - 1] = 2;
+      }
+    } else if (wheelState[position - 1] == 2) {
+      if (wheelState.contains(3)) {
+        for (int i = 0; i < wheelState.length; i++) {
+          if (wheelState[i] == 3) {
+            wheelState[i] = 0;
+          }
+        }
+        wheelState[position - 1] = 1;
+      } else {
+        wheelState[position - 1] = 1;
+      }
+    } else if (wheelState[position - 1] == 0) {
+      for (int i = 0; i < position; i++) {
+        if (wheelState[i] == 0) {
+          wheelState[i] = 3;
+        }
+      }
+    } else if (wheelState[position - 1] == 3) {
+      for (int i = position; i < wheelState.length; i++) {
+        if (wheelState[i] == 3) {
+          wheelState[i] = 0;
+        }
+      }
+    }
+    middleCircleStateChange();
+    setState(() {});
+  }
+
+  bool colorTextStateCheck(int position) {
+    if (wheelState[position - 1] == 1 || wheelState[position - 1] == 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void middleCircleStateChange() {
+    int countWords = 0;
+//     middleCircleState
+// textState
+    if (wheelState.contains(3)) {
+      for (int i = 0; i < wheelState.length; i++) {
+        if (wheelState[i] == 3) {
+          countWords++;
+        }
+      }
+      textState = (countWords * 100).toString();
+      middleCircleState = true;
+    } else {
+      for (int i = 0; i < wheelState.length; i++) {
+        if (wheelState[i] == 2) {
+          countWords++;
+        }
+      }
+      textState = (countWords * 100).toString();
+      middleCircleState = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    plateSize = MediaQuery.of(context).size.width-100;
+    plateSize = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTapDown: (details) {
         if (locatePoint(details.localPosition.dx, details.localPosition.dy, w100[0], w100[1], plateSize)) {
@@ -192,13 +263,14 @@ class _WordWheelState extends State<WordWheel> {
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w2000[0], w2000[1], plateSize)) {
           toggleState(20);
         } else {
-          print('no hit');
+          // setState(() {
+          //   middleCircleState = !middleCircleState;
+          // });
         }
       },
       child: Container(
         width: plateSize,
         height: plateSize,
-        color: Colors.green,
         child: Stack(
           children: [
             Positioned(
@@ -361,6 +433,27 @@ class _WordWheelState extends State<WordWheel> {
                 painter: Wheel2000(state: wheelState[19]),
               ),
             ),
+            WheelCircleText(plateSize: plateSize, text: textState, state: middleCircleState),
+            WheelTextRotated(plateSize: plateSize, text: '100', state: colorTextStateCheck(1), rotation: -(81 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '200', state: colorTextStateCheck(2), rotation: -(63 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '300', state: colorTextStateCheck(3), rotation: -(45 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '400', state: colorTextStateCheck(4), rotation: -(27 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '500', state: colorTextStateCheck(5), rotation: -(8.5 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '600', state: colorTextStateCheck(6), rotation: (9.5 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '700', state: colorTextStateCheck(7), rotation: (28 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '800', state: colorTextStateCheck(8), rotation: (46 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '900', state: colorTextStateCheck(9), rotation: (64 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '1000', state: colorTextStateCheck(10), rotation: (82 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '1100', state: colorTextStateCheck(11), rotation: (100 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '1200', state: colorTextStateCheck(12), rotation: (118 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '1300', state: colorTextStateCheck(13), rotation: (136 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '1400', state: colorTextStateCheck(14), rotation: (154 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '1500', state: colorTextStateCheck(15), rotation: (172 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '1600', state: colorTextStateCheck(16), rotation: (190 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '1700', state: colorTextStateCheck(17), rotation: (208 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '1800', state: colorTextStateCheck(18), rotation: (226 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '1900', state: colorTextStateCheck(19), rotation: (244 / 360)),
+            WheelTextRotated(plateSize: plateSize, text: '2000', state: colorTextStateCheck(20), rotation: (262 / 360)),
           ],
         ),
       ),
@@ -368,23 +461,6 @@ class _WordWheelState extends State<WordWheel> {
   }
 }
 
-// var x = -40;
-//  var y = -60;
-//  var xp = new Array(-73,-33,7,-33); // Массив X-координат полигона
-//  var yp = new Array(-85,-126,-85,-45); // Массив Y-координат полигона
-//  function inPoly(x,y){
-//    npol = xp.length;
-//    j = npol - 1;
-//    var c = 0;
-//    for (var i = 0; i < npol;i++){
-//        if ((((yp[i]<=y) && (y<yp[j])) || ((yp[j]<=y) && (y<yp[i]))) &&
-//        (x > (xp[j] - xp[i]) * (y - yp[i]) / (yp[j] - yp[i]) + xp[i])) {
-//         c = !c
-//         }
-//         j = i;
-//    }
-//  return c;
-//  }
 bool locatePoint(double x, double y, List<double> xp, List<double> yp, double size) {
   int npol = xp.length;
   int j = npol - 1;
@@ -397,4 +473,3 @@ bool locatePoint(double x, double y, List<double> xp, List<double> yp, double si
   }
   return c;
 }
-//  inPoly(x,y);
