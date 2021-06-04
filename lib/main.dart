@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:spanish_wheel/paths.dart';
 import 'package:spanish_wheel/text_rotation.dart';
@@ -54,9 +56,16 @@ class WordWheel extends StatefulWidget {
 
 class _WordWheelState extends State<WordWheel> {
   List<int> wheelState = List.filled(20, 0);
+  List<int> wheelAnimState = List.filled(20, 0);
+  List<bool> wheelAnimFade = List.filled(20, true);
   double plateSize;
   bool middleCircleState = false;
   String textState = '0';
+  int hitScan = 1;
+  bool _animation = true;
+  Timer animTimer;
+  int animDuration = 150;
+
   List<List<double>> w100 = [
     [0.5048326333992095, 0.5101130187747035, 0.5364454668972333, 0.6408025568181818],
     [0.004572860054347826, 0.33655200098814236, 0.3386942625988143, 0.026709563364624545]
@@ -140,10 +149,19 @@ class _WordWheelState extends State<WordWheel> {
 
   @override
   void initState() {
+    animationStart();
     for (int i = 0; i < widget.gotWords; i++) {
       wheelState[i] = 1;
     }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (animTimer.isActive) {
+      animTimer.cancel();
+    }
+    super.dispose();
   }
 
   void toggleState(int position) {
@@ -194,10 +212,16 @@ class _WordWheelState extends State<WordWheel> {
     }
   }
 
+  bool colorTextStateCheckAnim(int position) {
+    if (wheelAnimState[position - 1] == 1 || wheelAnimState[position - 1] == 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void middleCircleStateChange() {
     int countWords = 0;
-//     middleCircleState
-// textState
     if (wheelState.contains(3)) {
       for (int i = 0; i < wheelState.length; i++) {
         if (wheelState[i] == 3) {
@@ -217,6 +241,32 @@ class _WordWheelState extends State<WordWheel> {
     }
   }
 
+  void animationStart() {
+    int i = 0;
+    animTimer = Timer.periodic(Duration(milliseconds: animDuration), (timer) {
+      if (i < 20 + widget.gotWords) {
+        if (i < 20) {
+          wheelAnimState[i] = 1;
+        } else {
+          wheelAnimState[i - 20] = 1;
+        }
+      }
+      if (i > 3 && i < 24) {
+        wheelAnimFade[i - 4] = false;
+      }
+      if (i > 4 && i < 25) {
+        wheelAnimState[i - 5] = 0;
+        wheelAnimFade[i - 5] = true;
+      }
+      i++;
+      if (i == 20 + widget.gotWords + 1) {
+        animTimer.cancel();
+        _animation = false;
+      }
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     plateSize = MediaQuery.of(context).size.width;
@@ -224,238 +274,623 @@ class _WordWheelState extends State<WordWheel> {
       onTapDown: (details) {
         if (locatePoint(details.localPosition.dx, details.localPosition.dy, w100[0], w100[1], plateSize)) {
           toggleState(1);
+          hitScan = 1;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w200[0], w200[1], plateSize)) {
           toggleState(2);
+          hitScan = 2;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w300[0], w300[1], plateSize)) {
           toggleState(3);
+          hitScan = 3;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w400[0], w400[1], plateSize)) {
           toggleState(4);
+          hitScan = 4;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w500[0], w500[1], plateSize)) {
           toggleState(5);
+          hitScan = 5;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w600[0], w600[1], plateSize)) {
           toggleState(6);
+          hitScan = 6;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w700[0], w700[1], plateSize)) {
           toggleState(7);
+          hitScan = 7;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w800[0], w800[1], plateSize)) {
           toggleState(8);
+          hitScan = 8;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w900[0], w900[1], plateSize)) {
           toggleState(9);
+          hitScan = 9;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1000[0], w1000[1], plateSize)) {
           toggleState(10);
+          hitScan = 10;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1100[0], w1100[1], plateSize)) {
           toggleState(11);
+          hitScan = 11;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1200[0], w1200[1], plateSize)) {
           toggleState(12);
+          hitScan = 12;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1300[0], w1300[1], plateSize)) {
           toggleState(13);
+          hitScan = 13;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1400[0], w1400[1], plateSize)) {
           toggleState(14);
+          hitScan = 14;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1500[0], w1500[1], plateSize)) {
           toggleState(15);
+          hitScan = 15;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1600[0], w1600[1], plateSize)) {
           toggleState(16);
+          hitScan = 16;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1700[0], w1700[1], plateSize)) {
           toggleState(17);
+          hitScan = 17;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1800[0], w1800[1], plateSize)) {
           toggleState(18);
+          hitScan = 18;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1900[0], w1900[1], plateSize)) {
           toggleState(19);
+          hitScan = 19;
         } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w2000[0], w2000[1], plateSize)) {
           toggleState(20);
-        } else {
-          // setState(() {
-          //   middleCircleState = !middleCircleState;
-          // });
+          hitScan = 20;
+        }
+      },
+      onPanUpdate: (details) {
+        if (locatePoint(details.localPosition.dx, details.localPosition.dy, w100[0], w100[1], plateSize)) {
+          if (hitScan != 1) {
+            toggleState(1);
+          }
+          hitScan = 1;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w200[0], w200[1], plateSize)) {
+          if (hitScan != 2) {
+            toggleState(2);
+          }
+          hitScan = 2;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w300[0], w300[1], plateSize)) {
+          if (hitScan != 3) {
+            toggleState(3);
+          }
+          hitScan = 3;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w400[0], w400[1], plateSize)) {
+          if (hitScan != 4) {
+            toggleState(4);
+          }
+          hitScan = 4;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w500[0], w500[1], plateSize)) {
+          if (hitScan != 5) {
+            toggleState(5);
+          }
+          hitScan = 5;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w600[0], w600[1], plateSize)) {
+          if (hitScan != 6) {
+            toggleState(6);
+          }
+          hitScan = 6;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w700[0], w700[1], plateSize)) {
+          if (hitScan != 7) {
+            toggleState(7);
+          }
+          hitScan = 7;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w800[0], w800[1], plateSize)) {
+          if (hitScan != 8) {
+            toggleState(8);
+          }
+          hitScan = 8;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w900[0], w900[1], plateSize)) {
+          if (hitScan != 9) {
+            toggleState(9);
+          }
+          hitScan = 9;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1000[0], w1000[1], plateSize)) {
+          if (hitScan != 10) {
+            toggleState(10);
+          }
+          hitScan = 10;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1100[0], w1100[1], plateSize)) {
+          if (hitScan != 11) {
+            toggleState(11);
+          }
+          hitScan = 11;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1200[0], w1200[1], plateSize)) {
+          if (hitScan != 12) {
+            toggleState(12);
+          }
+          hitScan = 12;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1300[0], w1300[1], plateSize)) {
+          if (hitScan != 13) {
+            toggleState(13);
+          }
+          hitScan = 13;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1400[0], w1400[1], plateSize)) {
+          if (hitScan != 14) {
+            toggleState(14);
+          }
+          hitScan = 14;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1500[0], w1500[1], plateSize)) {
+          if (hitScan != 15) {
+            toggleState(15);
+          }
+          hitScan = 15;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1600[0], w1600[1], plateSize)) {
+          if (hitScan != 16) {
+            toggleState(16);
+          }
+          hitScan = 16;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1700[0], w1700[1], plateSize)) {
+          if (hitScan != 17) {
+            toggleState(17);
+          }
+          hitScan = 17;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1800[0], w1800[1], plateSize)) {
+          if (hitScan != 18) {
+            toggleState(18);
+          }
+          hitScan = 18;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w1900[0], w1900[1], plateSize)) {
+          if (hitScan != 19) {
+            toggleState(19);
+          }
+          hitScan = 19;
+        } else if (locatePoint(details.localPosition.dx, details.localPosition.dy, w2000[0], w2000[1], plateSize)) {
+          if (hitScan != 20) {
+            toggleState(20);
+          }
+          hitScan = 20;
         }
       },
       child: Container(
         width: plateSize,
         height: plateSize,
-        child: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              left: plateSize * 0.5014492753623188,
-              child: CustomPaint(
-                size: Size(plateSize * 0.1499130434782609, (plateSize * 0.3569855072463768).toDouble()),
-                painter: Wheel100(state: wheelState[0]),
+        child: _animation
+            ? Stack(
+                children: [
+                  Positioned(
+                    top: 0,
+                    left: plateSize * 0.5014492753623188,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[0]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: !wheelAnimFade[0] ? animDuration : 0),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.1499130434782609, (plateSize * 0.3569855072463768).toDouble()),
+                        painter: Wheel100(state: wheelAnimState[0]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.0242028985507246,
+                    left: plateSize * 0.5457101449275362,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[1]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.2451594202898551, (plateSize * 0.3528695652173913).toDouble()),
+                        painter: Wheel200(state: wheelAnimState[1]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.0949565217391304,
+                    left: plateSize * 0.5870434782608696,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[2]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3153623188405797, (plateSize * 0.3140289855072464).toDouble()),
+                        painter: Wheel300(state: wheelAnimState[2]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.2051304347826087,
+                    left: plateSize * 0.6200869565217391,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[3]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.354231884057971, (plateSize * 0.2446666666666667).toDouble()),
+                        painter: Wheel400(state: wheelAnimState[3]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.3441449275362319,
+                    left: plateSize * 0.6415652173913043,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[4]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3584057971014493, (plateSize * 0.1515072463768116).toDouble()),
+                        painter: Wheel500(state: wheelAnimState[4]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.4985507246376812,
+                    left: plateSize * 0.6432753623188406,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[5]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3567246376811594, (plateSize * 0.1519130434782609).toDouble()),
+                        painter: Wheel600(state: wheelAnimState[5]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.5448405797101449,
+                    left: plateSize * 0.6231304347826087,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[6]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3529565217391304, (plateSize * 0.2457971014492754).toDouble()),
+                        painter: Wheel700(state: wheelAnimState[6]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.5868115942028986,
+                    left: plateSize * 0.5905797101449275,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[7]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3146376811594203, (plateSize * 0.3156521739130435).toDouble()),
+                        painter: Wheel800(state: wheelAnimState[7]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.6204057971014493,
+                    left: plateSize * 0.549304347826087,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[8]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.2451304347826087, (plateSize * 0.3542028985507246).toDouble()),
+                        painter: Wheel900(state: wheelAnimState[8]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.6418550724637681,
+                    left: plateSize * 0.5014492753623188,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[9]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.153536231884058, (plateSize * 0.3581159420289855).toDouble()),
+                        painter: Wheel1000(state: wheelAnimState[9]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.6418840579710145,
+                    left: plateSize * 0.3450144927536232,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[10]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.153536231884058, (plateSize * 0.3581159420289855).toDouble()),
+                        painter: Wheel1100(state: wheelAnimState[10]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.6202608695652174,
+                    left: plateSize * 0.2053913043478261,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[11]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.245304347826087, (plateSize * 0.3543478260869565).toDouble()),
+                        painter: Wheel1200(state: wheelAnimState[11]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.5868115942028986,
+                    left: plateSize * 0.0947826086956522,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[12]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.314463768115942, (plateSize * 0.3154782608695652).toDouble()),
+                        painter: Wheel1300(state: wheelAnimState[12]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.5448405797101449,
+                    left: plateSize * 0.0239130434782609,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[13]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3529565217391304, (plateSize * 0.2457971014492754).toDouble()),
+                        painter: Wheel1400(state: wheelAnimState[13]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.4985507246376812,
+                    left: 0,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[14]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3567246376811594, (plateSize * 0.1519130434782609).toDouble()),
+                        painter: Wheel1500(state: wheelAnimState[14]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.3441449275362319,
+                    left: 0,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[15]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3584057971014493, (plateSize * 0.1515072463768116).toDouble()),
+                        painter: Wheel1600(state: wheelAnimState[15]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.2051304347826087,
+                    left: plateSize * 0.0256811594202899,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[16]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.354231884057971, (plateSize * 0.2446666666666667).toDouble()),
+                        painter: Wheel1700(state: wheelAnimState[16]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.0950724637681159,
+                    left: plateSize * 0.0978840579710145,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[17]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3148985507246377, (plateSize * 0.3139130434782609).toDouble()),
+                        painter: Wheel1800(state: wheelAnimState[17]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.0242028985507246,
+                    left: plateSize * 0.2089565217391304,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[18]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.2453333333333333, (plateSize * 0.3529565217391304).toDouble()),
+                        painter: Wheel1900(state: wheelAnimState[18]),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    left: plateSize * 0.3486376811594203,
+                    child: AnimatedOpacity(
+                      opacity: (wheelAnimFade[19]) ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: animDuration),
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.1499130434782609, (plateSize * 0.3569855072463768).toDouble()),
+                        painter: Wheel2000(state: wheelAnimState[19]),
+                      ),
+                    ),
+                  ),
+                  WheelCircleTextAnim(plateSize: plateSize),
+                  WheelTextRotated(plateSize: plateSize, text: '100', state: colorTextStateCheckAnim(1), rotation: -(81 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '200', state: colorTextStateCheckAnim(2), rotation: -(63 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '300', state: colorTextStateCheckAnim(3), rotation: -(45 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '400', state: colorTextStateCheckAnim(4), rotation: -(27 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '500', state: colorTextStateCheckAnim(5), rotation: -(8.5 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '600', state: colorTextStateCheckAnim(6), rotation: (9.5 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '700', state: colorTextStateCheckAnim(7), rotation: (28 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '800', state: colorTextStateCheckAnim(8), rotation: (46 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '900', state: colorTextStateCheckAnim(9), rotation: (64 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1000', state: colorTextStateCheckAnim(10), rotation: (82 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1100', state: colorTextStateCheckAnim(11), rotation: (100 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1200', state: colorTextStateCheckAnim(12), rotation: (118 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1300', state: colorTextStateCheckAnim(13), rotation: (136 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1400', state: colorTextStateCheckAnim(14), rotation: (154 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1500', state: colorTextStateCheckAnim(15), rotation: (172 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1600', state: colorTextStateCheckAnim(16), rotation: (190 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1700', state: colorTextStateCheckAnim(17), rotation: (208 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1800', state: colorTextStateCheckAnim(18), rotation: (226 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1900', state: colorTextStateCheckAnim(19), rotation: (244 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '2000', state: colorTextStateCheckAnim(20), rotation: (262 / 360)),
+                ],
+              )
+            : Stack(
+                children: [
+                  Positioned(
+                    top: 0,
+                    left: plateSize * 0.5014492753623188,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.1499130434782609, (plateSize * 0.3569855072463768).toDouble()),
+                      painter: Wheel100(state: wheelState[0]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.0242028985507246,
+                    left: plateSize * 0.5457101449275362,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.2451594202898551, (plateSize * 0.3528695652173913).toDouble()),
+                      painter: Wheel200(state: wheelState[1]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.0949565217391304,
+                    left: plateSize * 0.5870434782608696,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.3153623188405797, (plateSize * 0.3140289855072464).toDouble()),
+                      painter: Wheel300(state: wheelState[2]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.2051304347826087,
+                    left: plateSize * 0.6200869565217391,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.354231884057971, (plateSize * 0.2446666666666667).toDouble()),
+                      painter: Wheel400(state: wheelState[3]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.3441449275362319,
+                    left: plateSize * 0.6415652173913043,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.3584057971014493, (plateSize * 0.1515072463768116).toDouble()),
+                      painter: Wheel500(state: wheelState[4]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.4985507246376812,
+                    left: plateSize * 0.6432753623188406,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.3567246376811594, (plateSize * 0.1519130434782609).toDouble()),
+                      painter: Wheel600(state: wheelState[5]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.5448405797101449,
+                    left: plateSize * 0.6231304347826087,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.3529565217391304, (plateSize * 0.2457971014492754).toDouble()),
+                      painter: Wheel700(state: wheelState[6]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.5868115942028986,
+                    left: plateSize * 0.5905797101449275,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.3146376811594203, (plateSize * 0.3156521739130435).toDouble()),
+                      painter: Wheel800(state: wheelState[7]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.6204057971014493,
+                    left: plateSize * 0.549304347826087,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.2451304347826087, (plateSize * 0.3542028985507246).toDouble()),
+                      painter: Wheel900(state: wheelState[8]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.6418550724637681,
+                    left: plateSize * 0.5014492753623188,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.153536231884058, (plateSize * 0.3581159420289855).toDouble()),
+                      painter: Wheel1000(state: wheelState[9]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.6418840579710145,
+                    left: plateSize * 0.3450144927536232,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.153536231884058, (plateSize * 0.3581159420289855).toDouble()),
+                      painter: Wheel1100(state: wheelState[10]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.6202608695652174,
+                    left: plateSize * 0.2053913043478261,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.245304347826087, (plateSize * 0.3543478260869565).toDouble()),
+                      painter: Wheel1200(state: wheelState[11]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.5868115942028986,
+                    left: plateSize * 0.0947826086956522,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.314463768115942, (plateSize * 0.3154782608695652).toDouble()),
+                      painter: Wheel1300(state: wheelState[12]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.5448405797101449,
+                    left: plateSize * 0.0239130434782609,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.3529565217391304, (plateSize * 0.2457971014492754).toDouble()),
+                      painter: Wheel1400(state: wheelState[13]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.4985507246376812,
+                    left: 0,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.3567246376811594, (plateSize * 0.1519130434782609).toDouble()),
+                      painter: Wheel1500(state: wheelState[14]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.3441449275362319,
+                    left: 0,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.3584057971014493, (plateSize * 0.1515072463768116).toDouble()),
+                      painter: Wheel1600(state: wheelState[15]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.2051304347826087,
+                    left: plateSize * 0.0256811594202899,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.354231884057971, (plateSize * 0.2446666666666667).toDouble()),
+                      painter: Wheel1700(state: wheelState[16]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.0950724637681159,
+                    left: plateSize * 0.0978840579710145,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.3148985507246377, (plateSize * 0.3139130434782609).toDouble()),
+                      painter: Wheel1800(state: wheelState[17]),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.0242028985507246,
+                    left: plateSize * 0.2089565217391304,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.2453333333333333, (plateSize * 0.3529565217391304).toDouble()),
+                      painter: Wheel1900(state: wheelState[18]),
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    left: plateSize * 0.3486376811594203,
+                    child: CustomPaint(
+                      size: Size(plateSize * 0.1499130434782609, (plateSize * 0.3569855072463768).toDouble()),
+                      painter: Wheel2000(state: wheelState[19]),
+                    ),
+                  ),
+                  WheelCircleText(plateSize: plateSize, text: textState, state: middleCircleState),
+                  WheelTextRotated(plateSize: plateSize, text: '100', state: colorTextStateCheck(1), rotation: -(81 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '200', state: colorTextStateCheck(2), rotation: -(63 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '300', state: colorTextStateCheck(3), rotation: -(45 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '400', state: colorTextStateCheck(4), rotation: -(27 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '500', state: colorTextStateCheck(5), rotation: -(8.5 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '600', state: colorTextStateCheck(6), rotation: (9.5 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '700', state: colorTextStateCheck(7), rotation: (28 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '800', state: colorTextStateCheck(8), rotation: (46 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '900', state: colorTextStateCheck(9), rotation: (64 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1000', state: colorTextStateCheck(10), rotation: (82 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1100', state: colorTextStateCheck(11), rotation: (100 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1200', state: colorTextStateCheck(12), rotation: (118 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1300', state: colorTextStateCheck(13), rotation: (136 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1400', state: colorTextStateCheck(14), rotation: (154 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1500', state: colorTextStateCheck(15), rotation: (172 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1600', state: colorTextStateCheck(16), rotation: (190 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1700', state: colorTextStateCheck(17), rotation: (208 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1800', state: colorTextStateCheck(18), rotation: (226 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '1900', state: colorTextStateCheck(19), rotation: (244 / 360)),
+                  WheelTextRotated(plateSize: plateSize, text: '2000', state: colorTextStateCheck(20), rotation: (262 / 360)),
+                ],
               ),
-            ),
-            Positioned(
-              top: plateSize * 0.0242028985507246,
-              left: plateSize * 0.5457101449275362,
-              child: CustomPaint(
-                size: Size(plateSize * 0.2451594202898551, (plateSize * 0.3528695652173913).toDouble()),
-                painter: Wheel200(state: wheelState[1]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.0949565217391304,
-              left: plateSize * 0.5870434782608696,
-              child: CustomPaint(
-                size: Size(plateSize * 0.3153623188405797, (plateSize * 0.3140289855072464).toDouble()),
-                painter: Wheel300(state: wheelState[2]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.2051304347826087,
-              left: plateSize * 0.6200869565217391,
-              child: CustomPaint(
-                size: Size(plateSize * 0.354231884057971, (plateSize * 0.2446666666666667).toDouble()),
-                painter: Wheel400(state: wheelState[3]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.3441449275362319,
-              left: plateSize * 0.6415652173913043,
-              child: CustomPaint(
-                size: Size(plateSize * 0.3584057971014493, (plateSize * 0.1515072463768116).toDouble()),
-                painter: Wheel500(state: wheelState[4]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.4985507246376812,
-              left: plateSize * 0.6432753623188406,
-              child: CustomPaint(
-                size: Size(plateSize * 0.3567246376811594, (plateSize * 0.1519130434782609).toDouble()),
-                painter: Wheel600(state: wheelState[5]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.5448405797101449,
-              left: plateSize * 0.6231304347826087,
-              child: CustomPaint(
-                size: Size(plateSize * 0.3529565217391304, (plateSize * 0.2457971014492754).toDouble()),
-                painter: Wheel700(state: wheelState[6]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.5868115942028986,
-              left: plateSize * 0.5905797101449275,
-              child: CustomPaint(
-                size: Size(plateSize * 0.3146376811594203, (plateSize * 0.3156521739130435).toDouble()),
-                painter: Wheel800(state: wheelState[7]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.6204057971014493,
-              left: plateSize * 0.549304347826087,
-              child: CustomPaint(
-                size: Size(plateSize * 0.2451304347826087, (plateSize * 0.3542028985507246).toDouble()),
-                painter: Wheel900(state: wheelState[8]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.6418550724637681,
-              left: plateSize * 0.5014492753623188,
-              child: CustomPaint(
-                size: Size(plateSize * 0.153536231884058, (plateSize * 0.3581159420289855).toDouble()),
-                painter: Wheel1000(state: wheelState[9]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.6418840579710145,
-              left: plateSize * 0.3450144927536232,
-              child: CustomPaint(
-                size: Size(plateSize * 0.153536231884058, (plateSize * 0.3581159420289855).toDouble()),
-                painter: Wheel1100(state: wheelState[10]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.6202608695652174,
-              left: plateSize * 0.2053913043478261,
-              child: CustomPaint(
-                size: Size(plateSize * 0.245304347826087, (plateSize * 0.3543478260869565).toDouble()),
-                painter: Wheel1200(state: wheelState[11]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.5868115942028986,
-              left: plateSize * 0.0947826086956522,
-              child: CustomPaint(
-                size: Size(plateSize * 0.314463768115942, (plateSize * 0.3154782608695652).toDouble()),
-                painter: Wheel1300(state: wheelState[12]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.5448405797101449,
-              left: plateSize * 0.0239130434782609,
-              child: CustomPaint(
-                size: Size(plateSize * 0.3529565217391304, (plateSize * 0.2457971014492754).toDouble()),
-                painter: Wheel1400(state: wheelState[13]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.4985507246376812,
-              left: 0,
-              child: CustomPaint(
-                size: Size(plateSize * 0.3567246376811594, (plateSize * 0.1519130434782609).toDouble()),
-                painter: Wheel1500(state: wheelState[14]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.3441449275362319,
-              left: 0,
-              child: CustomPaint(
-                size: Size(plateSize * 0.3584057971014493, (plateSize * 0.1515072463768116).toDouble()),
-                painter: Wheel1600(state: wheelState[15]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.2051304347826087,
-              left: plateSize * 0.0256811594202899,
-              child: CustomPaint(
-                size: Size(plateSize * 0.354231884057971, (plateSize * 0.2446666666666667).toDouble()),
-                painter: Wheel1700(state: wheelState[16]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.0950724637681159,
-              left: plateSize * 0.0978840579710145,
-              child: CustomPaint(
-                size: Size(plateSize * 0.3148985507246377, (plateSize * 0.3139130434782609).toDouble()),
-                painter: Wheel1800(state: wheelState[17]),
-              ),
-            ),
-            Positioned(
-              top: plateSize * 0.0242028985507246,
-              left: plateSize * 0.2089565217391304,
-              child: CustomPaint(
-                size: Size(plateSize * 0.2453333333333333, (plateSize * 0.3529565217391304).toDouble()),
-                painter: Wheel1900(state: wheelState[18]),
-              ),
-            ),
-            Positioned(
-              top: 0,
-              left: plateSize * 0.3486376811594203,
-              child: CustomPaint(
-                size: Size(plateSize * 0.1499130434782609, (plateSize * 0.3569855072463768).toDouble()),
-                painter: Wheel2000(state: wheelState[19]),
-              ),
-            ),
-            WheelCircleText(plateSize: plateSize, text: textState, state: middleCircleState),
-            WheelTextRotated(plateSize: plateSize, text: '100', state: colorTextStateCheck(1), rotation: -(81 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '200', state: colorTextStateCheck(2), rotation: -(63 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '300', state: colorTextStateCheck(3), rotation: -(45 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '400', state: colorTextStateCheck(4), rotation: -(27 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '500', state: colorTextStateCheck(5), rotation: -(8.5 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '600', state: colorTextStateCheck(6), rotation: (9.5 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '700', state: colorTextStateCheck(7), rotation: (28 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '800', state: colorTextStateCheck(8), rotation: (46 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '900', state: colorTextStateCheck(9), rotation: (64 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '1000', state: colorTextStateCheck(10), rotation: (82 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '1100', state: colorTextStateCheck(11), rotation: (100 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '1200', state: colorTextStateCheck(12), rotation: (118 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '1300', state: colorTextStateCheck(13), rotation: (136 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '1400', state: colorTextStateCheck(14), rotation: (154 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '1500', state: colorTextStateCheck(15), rotation: (172 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '1600', state: colorTextStateCheck(16), rotation: (190 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '1700', state: colorTextStateCheck(17), rotation: (208 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '1800', state: colorTextStateCheck(18), rotation: (226 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '1900', state: colorTextStateCheck(19), rotation: (244 / 360)),
-            WheelTextRotated(plateSize: plateSize, text: '2000', state: colorTextStateCheck(20), rotation: (262 / 360)),
-          ],
-        ),
       ),
     );
   }
