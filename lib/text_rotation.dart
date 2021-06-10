@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WheelTextRotated extends StatelessWidget {
-  const WheelTextRotated({Key key, @required this.plateSize, @required this.text, @required this.state, @required this.rotation}) : super(key: key);
+  const WheelTextRotated({Key? key, required this.plateSize, required this.text, required this.state, required this.rotation}) : super(key: key);
   final double plateSize;
   final String text;
   final bool state;

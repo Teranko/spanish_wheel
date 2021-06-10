@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WheelCircleText extends StatelessWidget {
-  const WheelCircleText({Key key, @required this.plateSize, @required this.text, @required this.state}) : super(key: key);
+  const WheelCircleText({Key? key, required this.plateSize, required this.text, required this.state}) : super(key: key);
   final String text;
   final bool state;
   final double plateSize;
@@ -54,7 +54,7 @@ class WheelCircleText extends StatelessWidget {
 }
 
 class WheelCircleTextAnim extends StatelessWidget {
-  const WheelCircleTextAnim({Key key, @required this.plateSize}) : super(key: key);
+  const WheelCircleTextAnim({Key? key, required this.plateSize}) : super(key: key);
   final double plateSize;
 
   @override

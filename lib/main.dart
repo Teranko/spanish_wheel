@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:spanish_wheel/paths.dart';
+import 'package:spanish_wheel/test_choose.dart';
 import 'package:spanish_wheel/text_rotation.dart';
 import 'package:spanish_wheel/wheel_circle_text.dart';
 
@@ -17,13 +18,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Wheel(),
+      home: TestChoose(),
     );
   }
 }
 
 class Wheel extends StatefulWidget {
-  Wheel({Key key}) : super(key: key);
+  Wheel({Key? key, this.gotWords = 1, this.duration = 80}) : super(key: key);
+  final int gotWords;
+  final int duration;
 
   @override
   _WheelState createState() => _WheelState();
@@ -37,8 +40,18 @@ class _WheelState extends State<Wheel> {
       body: SafeArea(
           child: Column(
         children: [
-          Expanded(child: SizedBox()),
-          WordWheel(gotWords: 5),
+          Expanded(
+            child: GestureDetector(
+              onTap: () => Navigator.of(context).pop(),
+              child: Center(
+                child: Text(
+                  'BACK BUTTON',
+                  style: TextStyle(color: Colors.black, fontSize: 50),
+                ),
+              ),
+            ),
+          ),
+          WordWheel(gotWords: widget.gotWords, duration: widget.duration,),
           Expanded(child: SizedBox()),
         ],
       )),
@@ -47,8 +60,9 @@ class _WheelState extends State<Wheel> {
 }
 
 class WordWheel extends StatefulWidget {
-  WordWheel({Key key, this.gotWords = 1}) : super(key: key);
+  WordWheel({Key? key, this.gotWords = 1, this.duration = 80}) : super(key: key);
   final int gotWords;
+  final int duration;
 
   @override
   _WordWheelState createState() => _WordWheelState();
@@ -56,15 +70,17 @@ class WordWheel extends StatefulWidget {
 
 class _WordWheelState extends State<WordWheel> {
   List<int> wheelState = List.filled(20, 0);
-  List<int> wheelAnimState = List.filled(20, 0);
-  List<bool> wheelAnimFade = List.filled(20, true);
-  double plateSize;
+  List<int> wheelAnimState = List.filled(20, 1);
+  List<bool> wheelAnimFade = List.filled(20, false);
+  List<bool> wheelAnimFadeNoFade = List.filled(20, true);
+  List<bool> wheelAnimTextColor = List.filled(20, false);
+  late double plateSize;
   bool middleCircleState = false;
   String textState = '0';
   int hitScan = 1;
   bool _animation = true;
-  Timer animTimer;
-  int animDuration = 150;
+  late Timer animTimer;
+  late int animDuration;
 
   List<List<double>> w100 = [
     [0.5048326333992095, 0.5101130187747035, 0.5364454668972333, 0.6408025568181818],
@@ -149,6 +165,7 @@ class _WordWheelState extends State<WordWheel> {
 
   @override
   void initState() {
+    animDuration = widget.duration;
     animationStart();
     for (int i = 0; i < widget.gotWords; i++) {
       wheelState[i] = 1;
@@ -213,11 +230,7 @@ class _WordWheelState extends State<WordWheel> {
   }
 
   bool colorTextStateCheckAnim(int position) {
-    if (wheelAnimState[position - 1] == 1 || wheelAnimState[position - 1] == 2) {
-      return true;
-    } else {
-      return false;
-    }
+    return wheelAnimTextColor[position - 1];
   }
 
   void middleCircleStateChange() {
@@ -244,25 +257,41 @@ class _WordWheelState extends State<WordWheel> {
   void animationStart() {
     int i = 0;
     animTimer = Timer.periodic(Duration(milliseconds: animDuration), (timer) {
+      //fadein animation for wheel part
       if (i < 20 + widget.gotWords) {
         if (i < 20) {
-          wheelAnimState[i] = 1;
+          wheelAnimFade[i] = true;
+          wheelAnimFadeNoFade[i] = false;
+          wheelAnimTextColor[i] = true;
         } else {
-          wheelAnimState[i - 20] = 1;
+          wheelAnimFade[i - 20] = true;
+          wheelAnimFadeNoFade[i - 20] = false;
+          wheelAnimTextColor[i - 20] = true;
         }
       }
+
       if (i > 3 && i < 24) {
         wheelAnimFade[i - 4] = false;
       }
-      if (i > 4 && i < 25) {
-        wheelAnimState[i - 5] = 0;
-        wheelAnimFade[i - 5] = true;
+
+      if (i > 6 && i < 27) {
+        wheelAnimFadeNoFade[i - 7] = true;
+        wheelAnimTextColor[i - 7] = false;
       }
+
+      if (widget.gotWords < 5) {
+        if (i == 20 + widget.gotWords + 5 - widget.gotWords) {
+          animTimer.cancel();
+          _animation = false;
+        }
+      } else {
+        if (i == 20 + widget.gotWords) {
+          animTimer.cancel();
+          _animation = false;
+        }
+      }
+
       i++;
-      if (i == 20 + widget.gotWords + 1) {
-        animTimer.cancel();
-        _animation = false;
-      }
       setState(() {});
     });
   }
@@ -448,7 +477,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.5014492753623188,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[0]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: !wheelAnimFade[0] ? animDuration : 0),
+                      duration: Duration(milliseconds: wheelAnimFade[0] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.1499130434782609, (plateSize * 0.3569855072463768).toDouble()),
                         painter: Wheel100(state: wheelAnimState[0]),
@@ -460,7 +489,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.5457101449275362,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[1]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[1] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.2451594202898551, (plateSize * 0.3528695652173913).toDouble()),
                         painter: Wheel200(state: wheelAnimState[1]),
@@ -472,7 +501,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.5870434782608696,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[2]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[2] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.3153623188405797, (plateSize * 0.3140289855072464).toDouble()),
                         painter: Wheel300(state: wheelAnimState[2]),
@@ -484,7 +513,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.6200869565217391,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[3]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[3] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.354231884057971, (plateSize * 0.2446666666666667).toDouble()),
                         painter: Wheel400(state: wheelAnimState[3]),
@@ -496,7 +525,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.6415652173913043,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[4]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[4] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.3584057971014493, (plateSize * 0.1515072463768116).toDouble()),
                         painter: Wheel500(state: wheelAnimState[4]),
@@ -508,7 +537,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.6432753623188406,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[5]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[5] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.3567246376811594, (plateSize * 0.1519130434782609).toDouble()),
                         painter: Wheel600(state: wheelAnimState[5]),
@@ -520,7 +549,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.6231304347826087,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[6]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[6] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.3529565217391304, (plateSize * 0.2457971014492754).toDouble()),
                         painter: Wheel700(state: wheelAnimState[6]),
@@ -532,7 +561,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.5905797101449275,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[7]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[7] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.3146376811594203, (plateSize * 0.3156521739130435).toDouble()),
                         painter: Wheel800(state: wheelAnimState[7]),
@@ -544,7 +573,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.549304347826087,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[8]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[8] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.2451304347826087, (plateSize * 0.3542028985507246).toDouble()),
                         painter: Wheel900(state: wheelAnimState[8]),
@@ -556,7 +585,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.5014492753623188,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[9]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[9] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.153536231884058, (plateSize * 0.3581159420289855).toDouble()),
                         painter: Wheel1000(state: wheelAnimState[9]),
@@ -568,7 +597,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.3450144927536232,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[10]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[10] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.153536231884058, (plateSize * 0.3581159420289855).toDouble()),
                         painter: Wheel1100(state: wheelAnimState[10]),
@@ -580,7 +609,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.2053913043478261,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[11]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[11] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.245304347826087, (plateSize * 0.3543478260869565).toDouble()),
                         painter: Wheel1200(state: wheelAnimState[11]),
@@ -592,7 +621,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.0947826086956522,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[12]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[12] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.314463768115942, (plateSize * 0.3154782608695652).toDouble()),
                         painter: Wheel1300(state: wheelAnimState[12]),
@@ -604,7 +633,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.0239130434782609,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[13]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[13] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.3529565217391304, (plateSize * 0.2457971014492754).toDouble()),
                         painter: Wheel1400(state: wheelAnimState[13]),
@@ -616,7 +645,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: 0,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[14]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[14] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.3567246376811594, (plateSize * 0.1519130434782609).toDouble()),
                         painter: Wheel1500(state: wheelAnimState[14]),
@@ -628,7 +657,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: 0,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[15]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[15] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.3584057971014493, (plateSize * 0.1515072463768116).toDouble()),
                         painter: Wheel1600(state: wheelAnimState[15]),
@@ -640,7 +669,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.0256811594202899,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[16]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[16] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.354231884057971, (plateSize * 0.2446666666666667).toDouble()),
                         painter: Wheel1700(state: wheelAnimState[16]),
@@ -652,7 +681,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.0978840579710145,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[17]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[17] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.3148985507246377, (plateSize * 0.3139130434782609).toDouble()),
                         painter: Wheel1800(state: wheelAnimState[17]),
@@ -664,7 +693,7 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.2089565217391304,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[18]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[18] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.2453333333333333, (plateSize * 0.3529565217391304).toDouble()),
                         painter: Wheel1900(state: wheelAnimState[18]),
@@ -676,10 +705,231 @@ class _WordWheelState extends State<WordWheel> {
                     left: plateSize * 0.3486376811594203,
                     child: AnimatedOpacity(
                       opacity: (wheelAnimFade[19]) ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: animDuration),
+                      duration: Duration(milliseconds: wheelAnimFade[19] ? animDuration : animDuration * 3),
                       child: CustomPaint(
                         size: Size(plateSize * 0.1499130434782609, (plateSize * 0.3569855072463768).toDouble()),
                         painter: Wheel2000(state: wheelAnimState[19]),
+                      ),
+                    ),
+                  ),
+                  //TODO: 123
+                  Positioned(
+                    top: 0,
+                    left: plateSize * 0.5014492753623188,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[0] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.1499130434782609, (plateSize * 0.3569855072463768).toDouble()),
+                        painter: Wheel100(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.0242028985507246,
+                    left: plateSize * 0.5457101449275362,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[1] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.2451594202898551, (plateSize * 0.3528695652173913).toDouble()),
+                        painter: Wheel200(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.0949565217391304,
+                    left: plateSize * 0.5870434782608696,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[2] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3153623188405797, (plateSize * 0.3140289855072464).toDouble()),
+                        painter: Wheel300(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.2051304347826087,
+                    left: plateSize * 0.6200869565217391,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[3] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.354231884057971, (plateSize * 0.2446666666666667).toDouble()),
+                        painter: Wheel400(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.3441449275362319,
+                    left: plateSize * 0.6415652173913043,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[4] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3584057971014493, (plateSize * 0.1515072463768116).toDouble()),
+                        painter: Wheel500(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.4985507246376812,
+                    left: plateSize * 0.6432753623188406,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[5] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3567246376811594, (plateSize * 0.1519130434782609).toDouble()),
+                        painter: Wheel600(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.5448405797101449,
+                    left: plateSize * 0.6231304347826087,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[6] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3529565217391304, (plateSize * 0.2457971014492754).toDouble()),
+                        painter: Wheel700(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.5868115942028986,
+                    left: plateSize * 0.5905797101449275,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[7] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3146376811594203, (plateSize * 0.3156521739130435).toDouble()),
+                        painter: Wheel800(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.6204057971014493,
+                    left: plateSize * 0.549304347826087,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[8] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.2451304347826087, (plateSize * 0.3542028985507246).toDouble()),
+                        painter: Wheel900(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.6418550724637681,
+                    left: plateSize * 0.5014492753623188,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[9] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.153536231884058, (plateSize * 0.3581159420289855).toDouble()),
+                        painter: Wheel1000(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.6418840579710145,
+                    left: plateSize * 0.3450144927536232,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[10] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.153536231884058, (plateSize * 0.3581159420289855).toDouble()),
+                        painter: Wheel1100(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.6202608695652174,
+                    left: plateSize * 0.2053913043478261,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[11] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.245304347826087, (plateSize * 0.3543478260869565).toDouble()),
+                        painter: Wheel1200(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.5868115942028986,
+                    left: plateSize * 0.0947826086956522,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[12] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.314463768115942, (plateSize * 0.3154782608695652).toDouble()),
+                        painter: Wheel1300(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.5448405797101449,
+                    left: plateSize * 0.0239130434782609,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[13] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3529565217391304, (plateSize * 0.2457971014492754).toDouble()),
+                        painter: Wheel1400(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.4985507246376812,
+                    left: 0,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[14] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3567246376811594, (plateSize * 0.1519130434782609).toDouble()),
+                        painter: Wheel1500(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.3441449275362319,
+                    left: 0,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[15] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3584057971014493, (plateSize * 0.1515072463768116).toDouble()),
+                        painter: Wheel1600(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.2051304347826087,
+                    left: plateSize * 0.0256811594202899,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[16] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.354231884057971, (plateSize * 0.2446666666666667).toDouble()),
+                        painter: Wheel1700(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.0950724637681159,
+                    left: plateSize * 0.0978840579710145,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[17] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.3148985507246377, (plateSize * 0.3139130434782609).toDouble()),
+                        painter: Wheel1800(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: plateSize * 0.0242028985507246,
+                    left: plateSize * 0.2089565217391304,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[18] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.2453333333333333, (plateSize * 0.3529565217391304).toDouble()),
+                        painter: Wheel1900(state: 0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    left: plateSize * 0.3486376811594203,
+                    child: Opacity(
+                      opacity: wheelAnimFadeNoFade[19] ? 1 : 0,
+                      child: CustomPaint(
+                        size: Size(plateSize * 0.1499130434782609, (plateSize * 0.3569855072463768).toDouble()),
+                        painter: Wheel2000(state: 0),
                       ),
                     ),
                   ),
