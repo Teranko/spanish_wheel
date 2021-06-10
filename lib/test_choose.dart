@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spanish_wheel/main.dart';
+import 'package:spanish_wheel/wheel.dart';
 
 class TestChoose extends StatefulWidget {
   TestChoose({Key? key}) : super(key: key);

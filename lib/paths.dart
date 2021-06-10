@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 class Wheel100 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel100({required this.state, this.opacity = 1});
+  Wheel100({required this.state});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -20,19 +19,19 @@ class Wheel100 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -45,9 +44,8 @@ class Wheel100 extends CustomPainter {
 
 class Wheel200 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel200({required this.state, this.opacity = 1});
+  Wheel200({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -62,19 +60,19 @@ class Wheel200 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -87,9 +85,8 @@ class Wheel200 extends CustomPainter {
 
 class Wheel300 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel300({required this.state, this.opacity = 1});
+  Wheel300({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -104,19 +101,19 @@ class Wheel300 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -129,9 +126,8 @@ class Wheel300 extends CustomPainter {
 
 class Wheel400 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel400({required this.state, this.opacity = 1});
+  Wheel400({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -146,19 +142,19 @@ class Wheel400 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -171,9 +167,8 @@ class Wheel400 extends CustomPainter {
 
 class Wheel500 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel500({required this.state, this.opacity = 1});
+  Wheel500({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -188,19 +183,19 @@ class Wheel500 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -213,9 +208,8 @@ class Wheel500 extends CustomPainter {
 
 class Wheel600 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel600({required this.state, this.opacity = 1});
+  Wheel600({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -232,19 +226,19 @@ class Wheel600 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -257,9 +251,8 @@ class Wheel600 extends CustomPainter {
 
 class Wheel700 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel700({required this.state, this.opacity = 1});
+  Wheel700({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -274,19 +267,19 @@ class Wheel700 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -299,9 +292,8 @@ class Wheel700 extends CustomPainter {
 
 class Wheel800 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel800({required this.state, this.opacity = 1});
+  Wheel800({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -316,19 +308,19 @@ class Wheel800 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -341,9 +333,8 @@ class Wheel800 extends CustomPainter {
 
 class Wheel900 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel900({required this.state, this.opacity = 1});
+  Wheel900({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -359,19 +350,19 @@ class Wheel900 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -384,9 +375,8 @@ class Wheel900 extends CustomPainter {
 
 class Wheel1000 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel1000({required this.state, this.opacity = 1});
+  Wheel1000({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -401,19 +391,19 @@ class Wheel1000 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -426,9 +416,8 @@ class Wheel1000 extends CustomPainter {
 
 class Wheel1100 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel1100({required this.state, this.opacity = 1});
+  Wheel1100({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -443,19 +432,19 @@ class Wheel1100 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -468,9 +457,8 @@ class Wheel1100 extends CustomPainter {
 
 class Wheel1200 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel1200({required this.state, this.opacity = 1});
+  Wheel1200({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -485,19 +473,19 @@ class Wheel1200 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -510,9 +498,8 @@ class Wheel1200 extends CustomPainter {
 
 class Wheel1300 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel1300({required this.state, this.opacity = 1});
+  Wheel1300({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -527,19 +514,19 @@ class Wheel1300 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -552,9 +539,8 @@ class Wheel1300 extends CustomPainter {
 
 class Wheel1400 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel1400({required this.state, this.opacity = 1});
+  Wheel1400({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -569,19 +555,19 @@ class Wheel1400 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -594,9 +580,8 @@ class Wheel1400 extends CustomPainter {
 
 class Wheel1500 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel1500({required this.state, this.opacity = 1});
+  Wheel1500({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -614,19 +599,19 @@ class Wheel1500 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -639,36 +624,35 @@ class Wheel1500 extends CustomPainter {
 
 class Wheel1600 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel1600({required this.state, this.opacity = 1});
+  Wheel1600({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
-    path_0.moveTo(size.width*0.993 * 0.06891839, size.height * 0.01372715);
-    path_0.lineTo(size.width*0.993 * 0.9972258, size.height * 0.7194189);
-    path_0.cubicTo(size.width*0.993 * 0.9845484, size.height * 0.8079453, size.width*0.993 * 0.9771774, size.height * 0.9021547, size.width*0.993 * 0.9759758, size.height * 0.9999887);
-    path_0.lineTo(size.width*0.993 * 0.00005119081, size.height * 0.9999887);
-    path_0.cubicTo(size.width*0.993 * 0.001304000, size.height * 0.6558679, size.width*0.993 * 0.02538290, size.height * 0.3244849, size.width*0.993 * 0.06891839, size.height * 0.01372715);
+    path_0.moveTo(size.width * 0.993 * 0.06891839, size.height * 0.01372715);
+    path_0.lineTo(size.width * 0.993 * 0.9972258, size.height * 0.7194189);
+    path_0.cubicTo(size.width * 0.993 * 0.9845484, size.height * 0.8079453, size.width * 0.993 * 0.9771774, size.height * 0.9021547, size.width * 0.993 * 0.9759758, size.height * 0.9999887);
+    path_0.lineTo(size.width * 0.993 * 0.00005119081, size.height * 0.9999887);
+    path_0.cubicTo(size.width * 0.993 * 0.001304000, size.height * 0.6558679, size.width * 0.993 * 0.02538290, size.height * 0.3244849, size.width * 0.993 * 0.06891839, size.height * 0.01372715);
     path_0.close();
 
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -681,9 +665,8 @@ class Wheel1600 extends CustomPainter {
 
 class Wheel1700 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel1700({required this.state, this.opacity = 1});
+  Wheel1700({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -698,19 +681,19 @@ class Wheel1700 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -723,9 +706,8 @@ class Wheel1700 extends CustomPainter {
 
 class Wheel1800 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel1800({required this.state, this.opacity = 1});
+  Wheel1800({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -740,19 +722,19 @@ class Wheel1800 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -765,9 +747,8 @@ class Wheel1800 extends CustomPainter {
 
 class Wheel1900 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel1900({required this.state, this.opacity = 1});
+  Wheel1900({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -782,19 +763,19 @@ class Wheel1900 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
@@ -807,9 +788,8 @@ class Wheel1900 extends CustomPainter {
 
 class Wheel2000 extends CustomPainter {
   final int state;
-  final double opacity;
 
-  Wheel2000({required this.state, this.opacity = 1});
+  Wheel2000({required this.state});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -824,19 +804,19 @@ class Wheel2000 extends CustomPainter {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      paintFill.color = Color(0xff2EBDC0).withOpacity(opacity);
+      paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffFFE878).withOpacity(opacity);
+      paintFill.color = Color(0xffFFE878);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 2) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffBBD624).withOpacity(opacity);
+      paintFill.color = Color(0xffBBD624);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 3) {
       Paint paintFill = Paint()..style = PaintingStyle.fill;
-      paintFill.color = Color(0xffF2575C).withOpacity(opacity);
+      paintFill.color = Color(0xffF2575C);
       canvas.drawPath(path_0, paintFill);
     }
   }
