@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spanish_wheel/test_choose.dart';
+import 'package:spanish_wheel/wordwheel/wheel.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: TestChoose(),
+      home: Wheel(),
     );
   }
 }

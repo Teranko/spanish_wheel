@@ -18,7 +18,7 @@ class Wheel100 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -59,7 +59,7 @@ class Wheel200 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -100,7 +100,7 @@ class Wheel300 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -141,7 +141,7 @@ class Wheel400 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -182,7 +182,7 @@ class Wheel500 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -225,7 +225,7 @@ class Wheel600 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -266,7 +266,7 @@ class Wheel700 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -307,7 +307,7 @@ class Wheel800 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -349,7 +349,7 @@ class Wheel900 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -390,7 +390,7 @@ class Wheel1000 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -431,7 +431,7 @@ class Wheel1100 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -472,7 +472,7 @@ class Wheel1200 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -513,7 +513,7 @@ class Wheel1300 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -554,7 +554,7 @@ class Wheel1400 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -598,7 +598,7 @@ class Wheel1500 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -639,7 +639,7 @@ class Wheel1600 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -680,7 +680,7 @@ class Wheel1700 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -721,7 +721,7 @@ class Wheel1800 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -762,7 +762,7 @@ class Wheel1900 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {
@@ -803,7 +803,7 @@ class Wheel2000 extends CustomPainter {
     if (state == 0) {
       Paint paintFill = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+        ..strokeWidth = 1.6;
       paintFill.color = Color(0xff2EBDC0);
       canvas.drawPath(path_0, paintFill);
     } else if (state == 1) {

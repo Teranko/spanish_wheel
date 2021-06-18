@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spanish_wheel/wheel.dart';
+import 'package:spanish_wheel/lessonswheel/lessons_wheel.dart';
 
 class TestChoose extends StatefulWidget {
   TestChoose({Key? key}) : super(key: key);
@@ -103,7 +103,10 @@ class GoButton extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => Wheel(gotWords: wheelState, duration: animDuration,),
+            builder: (_) => Wheel(
+              gotWords: wheelState,
+              duration: animDuration,
+            ),
           ),
         );
       },

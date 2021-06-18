@@ -1,15 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:spanish_wheel/paths.dart';
-import 'package:spanish_wheel/text_rotation.dart';
-import 'package:spanish_wheel/wheel_circle_text.dart';
+import 'paths.dart';
+import 'text_rotation.dart';
+import 'wheel_circle_text.dart';
 
 class Wheel extends StatefulWidget {
   Wheel({Key? key, this.gotWords = 1, this.duration = 80}) : super(key: key);
   final int gotWords;
   final int duration;
-  
 
   @override
   _WheelState createState() => _WheelState();
@@ -37,13 +36,11 @@ class _WheelState extends State<Wheel> {
             ),
           ),
           WordWheel(
-            size: MediaQuery.of(context).size.width-100,
-            gotWords: widget.gotWords,
+            size: MediaQuery.of(context).size.width - 100,
+            gotWords: 9,
             duration: widget.duration,
-            onChanged: (value){
-              setState(() {
-                gotWords = value;
-              });
+            onChanged: (value) {
+              gotWords = value;
             },
           ),
           Expanded(
@@ -185,6 +182,28 @@ class _WordWheelState extends State<WordWheel> {
     super.dispose();
   }
 
+  @override
+  void didUpdateWidget(covariant WordWheel oldWidget) {
+    if (oldWidget.gotWords != widget.gotWords) {
+      _reinitWheel();
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void _reinitWheel() {
+    for (int i = 0; i < 20; i++) {
+      if (i < widget.gotWords) {
+        if (wheelState[i] == 0) {
+          wheelState[i] = 1;
+        } else if (wheelState[i] == 3) {
+          wheelState[i] = 2;
+        }
+      }
+    }
+    middleCircleStateChange();
+  }
+
   void toggleState(int position) {
     if (wheelState[position - 1] == 1) {
       if (wheelState.contains(3)) {
@@ -247,7 +266,7 @@ class _WordWheelState extends State<WordWheel> {
       }
       textState = (countWords * 100).toString();
       widget.onChanged('-$textState');
-      
+
       middleCircleState = true;
     } else {
       for (int i = 0; i < wheelState.length; i++) {
@@ -300,7 +319,6 @@ class _WordWheelState extends State<WordWheel> {
 
   @override
   Widget build(BuildContext context) {
-    
     return GestureDetector(
       onTapDown: (details) {
         if (locatePoint(details.localPosition.dx, details.localPosition.dy, w100[0], w100[1], plateSize)) {
