@@ -171,6 +171,8 @@ class _WordWheelState extends State<WordWheel> {
     for (int i = 0; i < widget.gotWords; i++) {
       wheelState[i] = 1;
     }
+    wheelState[0] = 2;
+    middleCircleStateChange();
     super.initState();
   }
 
